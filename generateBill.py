@@ -1,4 +1,4 @@
-import pythonMongo as pm
+import generateBillModules as pm
 
 DISCOUNT = 2
 
@@ -23,8 +23,8 @@ print('5\t\tRice Bath\t\t\t40.52')
 print('-'*60)
 
 amount = 0
-items = {1:'Dosa',2:'Idly',3:'Pongal',4:'Vada',5:'Rice Bath'}
-prices = {1:45.00,2:30.00,3:35.00,4:38.20,5:40.52}
+items = {1:'Dosa',2:'Idly',3:'Pongal',4:'Vada',5:'Rice Bath'} # itemCode mapped to itemName
+prices = {1:45.00,2:30.00,3:35.00,4:38.20,5:40.52} # itemCode mapped to price
 random = {}
 while True:
     itemCode = int(input('Enter the item: '))
@@ -32,7 +32,7 @@ while True:
         break
     else:
         quantity = int(input('Enter the quantity: '))
-        random[itemCode] = quantity
+        random[itemCode] = quantity # # itemCode mapped to quantity
         amount += (quantity * prices.get(itemCode))
 
 discount = (amount * DISCOUNT)/100
@@ -47,10 +47,10 @@ else:
     push = input('You want to insert or not ??')
     if push == 'Yes':
         pm.pushTheRecord(collectionName, name, netAmount, paymentMode)
-        print('Inserted Successfully !')
 
 result = bool(input('You want a bill copy or not: '))
 if result:
-    pm.displayBill()
-
+    pm.displayBill(random, items, prices, amount, discount, vat, service, netAmount, name)
+else:
+    print('Visit again !!')
 

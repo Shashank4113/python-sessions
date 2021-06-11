@@ -9,16 +9,17 @@ def connection():
   return mycol
 
 def pushTheRecord(collection, name, amount, modeOfP):
-  collection.insert_one({"name": name, "amount": [amount], "PaymentMode": [modeOfP]})
+  collection.insert_one({"name": name, "amount": [amount], "PaymentMode": [modeOfP], "visited": 1})
 
   print('Inserted Succesfully !')
 
 def checkUser(collection, name):
   record = collection.find({"name": name})
-  if record:
-    return True
-  else:
-    return False
+  for x in record:
+    if x['name'] == name:
+      return True
+    else:
+      return False
 
 def updateTheRecord(collection, name, amount, modeOfP):
   data = collection.find({"name": name}, {'_id': 0 ,"name": 0})
@@ -27,7 +28,8 @@ def updateTheRecord(collection, name, amount, modeOfP):
   for x in data:
     amounts.append(x['amount'])
     paymentModes.append(x['PaymentMode'])
-  collection.update_one({"name": name}, {"$set": {"amount": amounts, "PaymentMode": paymentModes}})
+    vis = x['visited']
+  collection.update_one({"name": name}, {"$set": {"amount": amounts, "PaymentMode": paymentModes, "visited": vis + 1}})
 
   print('Updated Succesfully !')
 
@@ -39,7 +41,7 @@ def sendMail():
 
   server.quit()
 
-def displayBill():
+def displayBill(random, items, prices, amount, discount, vat, service, netAmount, name):
   print('Meghana Foods'.center(85))
   print('No. 124 1st Cross Road, near Jyothi'.center(85))
   print('Nivas College, KHB Colony, 5th Block,'.center(85))
