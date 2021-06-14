@@ -17,6 +17,7 @@ def checkUser(collection, name):
   record = collection.find({"name": name})
   for x in record:
     if x['name'] == name:
+      print('User Found !')
       return True
     else:
       return False
@@ -42,6 +43,8 @@ def sendMail():
   server.quit()
 
 def displayBill(random, items, prices, amount, discount, vat, service, netAmount, name):
+  file = open('generateBill.txt', 'a')
+  file.write('Meghana Foods'.center(85))
   print('Meghana Foods'.center(85))
   print('No. 124 1st Cross Road, near Jyothi'.center(85))
   print('Nivas College, KHB Colony, 5th Block,'.center(85))
@@ -62,3 +65,23 @@ def displayBill(random, items, prices, amount, discount, vat, service, netAmount
   print('Net Amount\t\t\t\t\t\t\t{}'.format(round(netAmount, 2)))
   print('Get Back {}!'.format(name).center(85))
   print('-'*90)
+
+def displayItems():
+  print('List of available items'.center(50))
+  print('-'*60)
+  print('Code\t\tItem Name\t\t\tPrice')
+  print('-'*60)
+  print('1\t\tDosa\t\t\t\t45.00')
+  print('2\t\tIdly\t\t\t\t30.00')
+  print('3\t\tPongal\t\t\t\t35.00')
+  print('4\t\tVada\t\t\t\t38.20')
+  print('5\t\tRice Bath\t\t\t40.52')
+  print('-'*60)
+
+def calAttr(amt, DISCOUNT):
+  discount = (amt * DISCOUNT)/100
+  vat = (amt * 5.5)/100
+  service = (amt * 3)/100
+  netAmount = amt - discount + vat + service
+
+  return discount, vat, service, netAmount

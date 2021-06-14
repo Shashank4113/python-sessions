@@ -9,18 +9,8 @@ name = input('Please enter your name:\n')
 check = pm.checkUser(collectionName, name)
 if check:
     DISCOUNT = 3
-    print('We Found the user !')
 
-print('List of available items'.center(50))
-print('-'*60)
-print('Code\t\tItem Name\t\t\tPrice')
-print('-'*60)
-print('1\t\tDosa\t\t\t\t45.00')
-print('2\t\tIdly\t\t\t\t30.00')
-print('3\t\tPongal\t\t\t\t35.00')
-print('4\t\tVada\t\t\t\t38.20')
-print('5\t\tRice Bath\t\t\t40.52')
-print('-'*60)
+pm.displayItems()
 
 amount = 0
 items = {1:'Dosa',2:'Idly',3:'Pongal',4:'Vada',5:'Rice Bath'} # itemCode mapped to itemName
@@ -32,13 +22,10 @@ while True:
         break
     else:
         quantity = int(input('Enter the quantity: '))
-        random[itemCode] = quantity # # itemCode mapped to quantity
+        random[itemCode] = quantity # itemCode mapped to quantity
         amount += (quantity * prices.get(itemCode))
 
-discount = (amount * DISCOUNT)/100
-vat = (amount * 5.5)/100
-service = (amount * 3)/100
-netAmount = amount - discount + vat + service
+discount, vat, service, netAmount = pm.calAttr(amount, DISCOUNT)
 paymentMode = input('Cash or Card ?? ')
 
 if check:
